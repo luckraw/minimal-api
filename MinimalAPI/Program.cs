@@ -36,5 +36,15 @@ await context.Fornecedores.FindAsync(id)
     .WithName("GetFornecedorById")
     .WithTags("Fornecedor");
 
+app.MapPost("/fornecedor", async (MinimalContextDb context, Fornecedor fornecedor) =>
+{
+    context.Fornecedores.Add(fornecedor);
+    var result = await context.SaveChangesAsync();
+})
+    .WithName("PostFornecedor")
+    .WithTags("Fornecedor")
+    .Produces<Fornecedor>(StatusCodes.Status201Created)
+    .Produces(StatusCodes.Status400BadRequest);
+
 
 app.Run();
